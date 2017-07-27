@@ -1,0 +1,22 @@
+{
+  "name": "socket-app",
+  "description": "node with express / websocket.io",
+  "main": "index.html",
+  "authors": [
+    "Gauthier <mysterandco@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7"
+  }
+}
