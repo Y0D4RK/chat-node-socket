@@ -67,12 +67,12 @@
 
             socket.on('newmsg', function(message){
                 console.log(message);
-                if( lastmsg != message.user.id){
+                if( lastmsg != message.me.id){
                     $('#messages').append('<div class="space"></div>');
-                    lastmsg = message.user.id;
+                    lastmsg = message.me.id;
                 }
                 $('#messages').append('<div class="message">'+
-                                        '<img src="'+message.me.avatar+'" class="gravatar-msg">'+
+                                        '<img src="'+message.me.avatar+'" class="img-circle img-responsive">'+
                                         '<div class="info">'+
                                             '<p><strong>'+message.me.username+'</strong></p>'+
                                             '<p>'+message.message+'</p>'+
