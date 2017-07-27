@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>WebSockets - Simple chat avec Node.js</title>
+        <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div class="container-fluid" id="login">
+            <form action="" id="formLogin">
+                <h1> WELCOME </h1>
+                <input type="text" id="username" class="form-control" placeholder="Nom d'utilisateur">
+                <input type="email" id="mail" class="form-control" placeholder="E-mail">
+                <input type="submit" value="Se connecter">
+            </form>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-2">
+                    <div id="users"></div>
+                </div>
+                <div class="col-xs-10">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="messages">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form action="" id="form">
+                            <input type="text" id="message" class="form-control" placeholder="Votre message">
+                            <input type="submit" id="send" class="form-control" value="Envoyer mon message">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/jquery/dist/jquery.js"></script>
+        <script src="/bootstrap/js/modal.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://localhost:4200');
+            var lastmsg = false;
+
+            $('#formLogin').submit(function(event){
+                event.preventDefault();
+                socket.emit('login', {
+                    username : $('#username').val(),
+                    mail     : $('#mail').val()
+                })
+            });
+
+            socket.on('logged', function(){
+                $('#login').fadeOut();
+                $('#message').focus();
+            });
+
+            $('#form').submit(function(event){
+                event.preventDefault();
+                socket.emit('newmsg', {message: $('#message').val()});
+                $('#message').val('');
+                $('#message').focus();
+
+            });
+
+            socket.on('newmsg', function(message){
+                console.log(message);
+                if( lastmsg != message.user.id){
+                    $('#messages').append('<div class="space"></div>');
+                    lastmsg = message.user.id;
+                }
+                $('#messages').append('<div class="message">'+
+                                        '<img src="'+message.me.avatar+'" class="gravatar-msg">'+
+                                        '<div class="info">'+
+                                            '<p><strong>'+message.me.username+'</strong></p>'+
+                                            '<p>'+message.message+'</p>'+
+                                            '<span class="date">'+ message.h +':'+ message.min +'</span>'+
+                                        '</div><div class="both"></div>'+
+                                      '</div>'
+                );
+
+                $('#messages').animate({scrollTop : $('#messages').prop('scrollHeight') }, 50);
+            });
+
+            socket.on('newuser', function(user){
+                $('#users').append('<img src="'+ user.avatar +'" id="'+user.id+'" class="img-circle img-responsive gravatar">');
+            });
+
+            socket.on('disuser', function(user){
+                $('#'+user.id).remove();
+            });
+        </script>
+    </body>
+</html>

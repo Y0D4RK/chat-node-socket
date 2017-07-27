@@ -1,0 +1,42 @@
+body{
+    background-color: #FFF;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#login{
+
+}
+#login #loginForm{
+
+}
+
+#users{
+    background-color: #34495e;
+    padding: 20px;
+}
+#users .gravatar{
+    padding: 10px;
+}
+
+.message{
+    width: 90%;
+    background-color: #FFF;
+}
+.message img{
+    display: inline-block;
+    float: left;
+}
+.message .info{
+    display: inline-block;
+    float: right;
+}
+.message .both{
+    clear: both;
+}
+
+.date{
+    font-size: 10px;
+    font-family: "Courier New";
+}
