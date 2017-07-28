@@ -33,6 +33,8 @@ io.on('connection', function(socket) {
     socket.on('login', function(user){
         me = user;
         me.id = user.mail.replace('@', '-').replace('.', '-');
+        me.mail = user.mail;
+        me.username = user.username;
         me.avatar = 'https://gravatar.com/avatar/'+md5(user.mail)+ '?s=50';
         socket.emit('logged');
         users[me.id] = me;
