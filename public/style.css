@@ -19,12 +19,13 @@ body{
     padding: 20px;
 }
 #users img{
-    display: inline-block;
-    margin: 10px;
+    margin-top: 10px;
 }
 #users h3 {
     color: #FFF;
-    font: "Impact";
+    border-bottom: 2px solid #FFF;
+    padding-bottom: 20px;
+    text-align: center;
 }
 #users h4{
     display: inline-block;
@@ -34,7 +35,9 @@ body{
     height: 400px;
     padding-top: 40px;
     padding-bottom: 40px;
+    overflow-y: scroll;
     background-color: rgba(255,255,255,0.4);
+
 }
 .message{
     position: relative;
@@ -91,4 +94,7 @@ body{
 }
 .no-padding-right{
     padding-right: 0;
+}
+.modal-title{
+    font-weight: 800;
 }

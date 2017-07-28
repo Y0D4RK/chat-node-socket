@@ -4,14 +4,16 @@
         <meta charset="UTF-8">
         <title>WebSockets - Simple chat avec Node.js</title>
         <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/components-font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
         <div id="modalSign" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">WELCOME TO CHAT IN WEBSOCKET</h4>
+                    <div class="modal-header text-center">
+                        <h3 class="modal-title">WELCOME</h3>
+                        <p class="text-warning">Node.JS and Websocket.IO</p>
                     </div>
                     <div class="modal-body">
                         <form action="" id="formLogin" class="form-horizontal">
@@ -26,8 +28,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-xs-12">
-                                    <input type="submit" value="Se connecter" class="btn btn-primary">
+                                <div class="col-xs-6 col-xs-offset-3">
+                                    <input type="submit" value="Se connecter" class="btn btn-primary btn-block">
                                 </div>
                             </div>
                         </form>
@@ -37,10 +39,10 @@
         </div>
         <div class="container-fluid">
             <div class="row bordered">
-                <div class="col-xs-2 no-padding-right">
-                    <div id="users"><h3>Users en ligne</h3></div>
+                <div class="col-xs-2 no-padding-right no-padding-left">
+                    <div id="users"><h3>En ligne</h3></div>
                 </div>
-                <div class="col-xs-10 no-padding-left">
+                <div class="col-xs-10 no-padding-right no-padding-left">
                     <div class="row">
                         <div class="col-xs-12">
                             <div id="messages">
@@ -76,7 +78,6 @@
             var firstmsg = false;
 
             $(window).on('load',function(){
-//                $('#modalSign').modal('show');
                 $('#modalSign').modal({
                     show: true,
                     backdrop: 'static',
@@ -87,9 +88,8 @@
 
             $('#formLogin').submit(function(event){
                 event.preventDefault();
-                if(!$('#username').val())
-                {
-                    alert('vous devez choisir un username valide')
+                if(!$('#username').val()) {
+                    alert('Vous devez choisir un username valide')
                 }else{
                     socket.emit('login', {
                         username : $('#username').val(),
@@ -116,11 +116,10 @@
 
                 if( lastmsg != message.me.id ){
                     $('#messages').append('<div class="space"></div>');
-                    $('#'+message.me.id).addClass('corner-top-left');
                     lastmsg = message.me.id;
                 }
 
-                $('#messages').append('<div class="message" id="#'+message.me.id+'">'+
+                $('#messages').append('<div class="message">'+
                                         '<img src="'+message.me.avatar+'" class="img-circle img-responsive" width="20">'+
                                         '<div class="info">'+
                                             '<p><strong>'+message.me.username+'</strong></p>'+
@@ -134,7 +133,7 @@
             });
 
             socket.on('newuser', function(user){
-                $('#users').append('<img src="'+ user.avatar +'" id="'+user.id+'" class="img-circle img-responsive"><h4><span class="label label-primary">'+user.username+'</span></h4><br>');
+                $('#users').append('<img src="'+ user.avatar +'" id="'+user.id+'" class="img-circle img-responsive center-block">');
             });
 
             socket.on('disuser', function(user){
