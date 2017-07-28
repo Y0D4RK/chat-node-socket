@@ -25,12 +25,14 @@ body{
 
 #messages{
     overflow-y: scroll;
-    max-height: 500px;
+    height: 500px;
 }
 .message{
     position: relative;
-    width: 90%;
-    background-color: #aaa;
+    margin: 0 auto;
+    width: 95%;
+    background-color: #c9e2b3;
+    padding: 10px;
 }
 .message .info + p{
     font-size: 12px;

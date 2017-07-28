@@ -6,12 +6,12 @@
         <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="/style.css">
     </head>
-    <body>
+    <div>
         <div class="container-fluid" id="login">
             <form action="" id="formLogin">
                 <h1> WELCOME </h1>
                 <input type="text" id="username" class="form-control" placeholder="Nom d'utilisateur">
-                <input type="email" id="mail" class="form-control" placeholder="E-mail">
+                <input type="text" id="mail" class="form-control" placeholder="E-mail">
                 <input type="submit" value="Se connecter">
             </form>
         </div>
@@ -28,9 +28,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <form action="" id="form">
-                            <input type="text" id="message" class="form-control" placeholder="Votre message">
-                            <input type="submit" id="send" class="form-control" value="Envoyer mon message">
+                        <form action="" id="form" class="form-inline">
+                            <textarea type="text" id="message" class="form-control col-xs-10">Votre message</textarea>
+                            <input type="submit" id="send" class="form-control col-xs-2" value="Envoyer mon message"></div>
                         </form>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
             $('#formLogin').submit(function(event){
                 event.preventDefault();
                 socket.emit('login', {
-                    username : $('#username').val(),
+                    name : $('#username').val(),
                     mail     : $('#mail').val()
                 })
             });
@@ -67,11 +67,13 @@
 
             socket.on('newmsg', function(message){
                 console.log(message);
+
                 if( lastmsg != message.me.id){
                     $('#messages').append('<div class="space"></div>');
                     lastmsg = message.me.id;
                 }
-                $('#messages').append('<div class="message">'+
+
+                $('#messages').append('<div class="message" id="#'+message.me.id+'>'+
                                         '<img src="'+message.me.avatar+'" class="img-circle img-responsive">'+
                                         '<div class="info">'+
                                             '<p><strong>'+message.me.username+'</strong></p>'+
