@@ -38,33 +38,31 @@
             </div>
         </div>
         <div class="container-fluid">
-            <div class="row bordered">
-                <div class="col-xs-2 no-padding-right no-padding-left">
-                    <div id="users"><h3>En ligne</h3></div>
-                </div>
-                <div class="col-xs-10 no-padding-right no-padding-left">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div id="messages">
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="col-xs-2 no-padding">
+                    <div id="users">
+                        <h3>En ligne</h3>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <form action="" id="form" class="form-inline">
-                                <div class="row">
-                                    <div class="col-xs-8 col-xs-offset-4">
-                                        <div class="input-group input-group-lg">
-                                            <input type="text" id="message" class="form-control" placeholder="Message">
-                                            <div class="input-group-btn">
-                                                <input type="submit" id="send" class="btn" value="Envoyer">
-                                            </div>
-                                        </div>
+                </div>
+                <div class="col-xs-10 no-padding">
+                    <div id="messages">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <form action="" id="form" class="form-inline">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="input-group input-group-lg">
+                                    <input type="text" id="message" class="form-control" placeholder="Message">
+                                    <div class="input-group-btn">
+                                        <input type="submit" id="send" class="btn" value="Envoyer">
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -75,7 +73,6 @@
         <script>
             var socket = io.connect('http://localhost:4200');
             var lastmsg = false;
-            var firstmsg = false;
 
             $(window).on('load',function(){
                 $('#modalSign').modal({
@@ -84,6 +81,9 @@
                     keyboard: false
                 });
 
+                if($('#messages').empty()){
+                    $('#messages').append('<h2 class="text-center h2">Aucun message</h2>');
+                }
             });
 
             $('#formLogin').submit(function(event){
@@ -108,32 +108,38 @@
                 socket.emit('newmsg', {message: $('#message').val()});
                 $('#message').val('');
                 $('#message').focus();
-
             });
 
             socket.on('newmsg', function(message){
-                console.log(message);
+                console.log(message.me);
+                console.log(message.message);
 
-                if( lastmsg != message.me.id ){
+                if( lastmsg != message.me.username ){
                     $('#messages').append('<div class="space"></div>');
-                    lastmsg = message.me.id;
+                    lastmsg = message.me.username;
                 }
 
-                $('#messages').append('<div class="message">'+
-                                        '<img src="'+message.me.avatar+'" class="img-circle img-responsive" width="20">'+
+                $('.h2').remove();
+
+                $('#messages').append('<div class="message '+message.me.username+'">'+
+                                        '<img src="'+message.me.avatar+'" class="img-responsive img-rounded" width="50">'+
                                         '<div class="info">'+
-                                            '<p><strong>'+message.me.username+'</strong></p>'+
-                                            '<p>'+message.message+'</p>'+
+                                            '<p class="username"><strong>'+message.me.username+'</strong></p>'+
+                                            '<p class="msgreceive">'+message.message+'</p>'+
                                             '<span class="date">'+ message.h +':'+ message.min +'</span>'+
                                         '</div><div class="both"></div>'+
                                       '</div>'
                 );
+                $('.space').prev().css('border-bottom-left-radius', '10px');
+                $('.space').next().css('border-top-left-radius', '10px');
+
+
 
                 $('#messages').animate({scrollTop : $('#messages').prop('scrollHeight') }, 50);
             });
 
             socket.on('newuser', function(user){
-                $('#users').append('<img src="'+ user.avatar +'" id="'+user.id+'" class="img-circle img-responsive center-block">');
+                $('#users').append('<img src="'+ user.avatar +'" id="'+user.id+'" class="img-responsive img-rounded center-block">');
             });
 
             socket.on('disuser', function(user){

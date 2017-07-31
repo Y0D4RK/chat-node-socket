@@ -1,10 +1,8 @@
 body{
     background: #FFF;
-    background-size: cover;
-
     width: 100%;
     margin: 0;
-    padding: 40px 0 0 0;
+    padding: 0;
 }
 
 #login{
@@ -17,14 +15,19 @@ body{
 #users{
     background-color: #34495e;
     padding: 20px;
+    border-right: 1px solid black;
+    height: 600px;
 }
 #users img{
     margin-top: 10px;
+    box-shadow: -1px 1px 10px 5px #333;
 }
 #users h3 {
     color: #FFF;
-    border-bottom: 2px solid #FFF;
+    border-bottom: 3px solid #FFF;
     padding-bottom: 20px;
+    margin-bottom: 20px;
+    font-weight: 700;
     text-align: center;
 }
 #users h4{
@@ -32,35 +35,29 @@ body{
 }
 
 #messages{
-    height: 400px;
+    height: 600px;
     padding-top: 40px;
     padding-bottom: 40px;
+    padding-left: 20px;
     overflow-y: scroll;
     background-color: rgba(255,255,255,0.4);
+    box-shadow: 8px 0px 40px 1px #000;
 
 }
 .message{
     position: relative;
+    font-size: 14px;
     margin: 0 auto;
     width: 95%;
-    background-color: rgb(200,200,255);
+    background-color: #eeeeee;
     padding: 10px;
 }
+#message{
+    width: 100%;
+}
 .bordered{
-    border: 1px solid #000;
-}
-
-.corner-top-left{
-    border-top-left-radius: 5px;
-}
-.corner-top-right{
-    border-top-right-radius: 5px;
-}
-.corner-bottom-left{
-    border-bottom-left-radius: 5px;
-}
-.corner-bottom-right{
-    border-bottom-right-radius: 5px;
+    border: 1px solid #0f0f0f;
+    border-radius: 0;
 }
 
 .message .info + p{
@@ -70,7 +67,6 @@ body{
     display: inline-block;
     float: left;
     margin-right: 10px;
-    min-width: 30px;
 }
 .message .info{
     display: inline-block;
@@ -89,12 +85,16 @@ body{
     display: block;
     height: 15px;
 }
-.no-padding-left{
-    padding-left: 0;
-}
-.no-padding-right{
-    padding-right: 0;
+.no-padding{
+    padding: 0;
 }
 .modal-title{
     font-weight: 800;
+}
+#form > .row{
+    background-color: #1b6d85;
+    padding: 10px;
+}
+.input-group{
+    width: 100%;
 }

@@ -1,3 +1,4 @@
+
 'use strict';
 
 var md5 = require('md5');
@@ -21,7 +22,7 @@ io.on('connection', function(socket) {
 
     var me = false;
 
-    console.log('Nouveau utilisateur');
+    console.log('Nouveau user in the chat');
 
     for(var u in users){
         socket.emit('newuser', users[u]);
@@ -35,10 +36,10 @@ io.on('connection', function(socket) {
         me.id = user.mail.replace('@', '-').replace('.', '-');
         me.mail = user.mail;
         me.username = user.username;
-        me.avatar = 'https://gravatar.com/avatar/'+md5(user.mail)+ '?s=50';
+        me.avatar = 'https://gravatar.com/avatar/'+md5(user.mail)+ '?s=100';
         socket.emit('logged');
         users[me.id] = me;
-        io.sockets.emit('newuser', me);
+        io.sockets.emit('newuser', me)
     });
 
     /* On recoit un nouveau msg */
